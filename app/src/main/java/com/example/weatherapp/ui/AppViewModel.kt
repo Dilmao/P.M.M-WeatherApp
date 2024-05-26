@@ -2,19 +2,11 @@ package com.example.weatherapp.ui
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-class AppViewModel : AppViewModel() { // TODO muchas cosas que cambiar
-    private val _weather = MutableStateFlow<WeatherResponse?>(null)
-    val weather: StateFlow<WeatherResponse?> = _weather
+class AppViewModel {
+    private val _appUiState = MutableStateFlow(AppUiState())
+    val appUiState: StateFlow<AppUiState> = _appUiState.asStateFlow()
 
-    init {
-        fetchWeather("Jaca")
-    }
-
-    private fun fetchWeather(city: String) {
-        viewModelScope.launch {
-            val response = RetrofitInstance.api.getCurrentWeather(ciry, "93918e4c01b474b2757b449474dd8021")
-            _weather.value = response
-        }
-    }
+    // TODO
 }
