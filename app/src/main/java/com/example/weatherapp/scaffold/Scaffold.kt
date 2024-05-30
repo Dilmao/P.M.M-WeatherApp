@@ -9,9 +9,9 @@ import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTitleTopBar(titulo: String) {
+fun MyTitleTopBar(titulo: String, ciudad: String) {
     CenterAlignedTopAppBar(
-        title = { Text(text = titulo) },
+        title = { Text(text = titulo + ciudad) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.LightGray,
             titleContentColor = Color.Black,

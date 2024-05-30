@@ -8,8 +8,9 @@ import com.example.weatherapp.screens.WeatherScreen
 import com.example.weatherapp.ui.AppViewModel
 
 @Composable
-fun AppNavigation(appViewModel: AppViewModel) {
+fun AppNavigation() {
     val navController = rememberNavController()
+    val appViewModel = AppViewModel()
     NavHost(navController = navController, startDestination = AppScreens.WeatherScreen.route) {
         composable(route = AppScreens.WeatherScreen.route) { WeatherScreen(navController, appViewModel)}
     }
