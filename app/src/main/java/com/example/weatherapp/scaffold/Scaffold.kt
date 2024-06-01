@@ -13,7 +13,7 @@ fun MyTitleTopBar(titulo: String, ciudad: String) {
     CenterAlignedTopAppBar(
         title = { Text(text = titulo + ciudad) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color.LightGray,
+            containerColor = Color.White,
             titleContentColor = Color.Black,
         )
     )

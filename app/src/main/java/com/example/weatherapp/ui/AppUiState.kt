@@ -3,6 +3,16 @@ package com.example.weatherapp.ui
 import com.example.weatherapp.data.model.RemoteResult
 
 data class AppUiState (
-    var clima: RemoteResult? = null,
-    var ciudad: String = "Jaca",
+    // COMENTARIO.
+    var remoteResult: RemoteResult? = null,
+
+    // COMENTARIO.
+    var city: String = "Jaca",
+    var country: String = "",
+    var temperature: String = "",
+    var weather: String = "",
+    var iconID: String = "",
+
+    // COMENTARIO
+    var error: String = "",
 )

@@ -13,7 +13,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherAppTheme {
-                // COMENTAR AppNavigation PARA CODIGO QUE NO FALLA.
                 AppNavigation()
             }
         }

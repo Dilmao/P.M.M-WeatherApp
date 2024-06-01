@@ -68,6 +68,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
+    // Biblioteca Coil. (cargar las imágenes desde las URL´s)
+    implementation("io.coil-kt:coil-compose:1.4.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
