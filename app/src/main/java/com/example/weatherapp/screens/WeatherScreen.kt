@@ -1,5 +1,6 @@
 package com.example.weatherapp.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,9 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,29 +24,30 @@ import com.example.weatherapp.screens.componentes.WeatherCard
 import com.example.weatherapp.ui.AppViewModel
 
 // TODO:
-//  2. Mejorar el manejo de errores al no encontrar ciudad (AppViewModel).
-//  3. Lograr que se muestre el icono del clima (WeatherDescription).
+//  1. Lograr que se muestre el icono del clima (WeatherDescription).
+//  2. Hacer que la primella llamada a la API use la localización del usuario.
+//  3. Hacer el pronostico para los proximos dias / o no :v
 
 @Composable
 fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) {
-    // Se obtiene el estado de la UI.
+    // Se recoge el estado actual de la UI desde el ViewModel.
     val appUiState by appViewModel.appUiState.collectAsState()
 
-    // Se inicializa la applicación.
+    // Se actualiza la API con los valores pasados.
     appViewModel.updateCity(appUiState.city)
 
-    // Se configura un Scaffold con una barra superior.
+    // Scaffold.
     Scaffold(
         topBar = { MySearchTopBar(appViewModel) }
     ) { paddingValues ->
-        // Se configura un contenedor con fondo azul oscruo.
+        // Se crea un contenedor que ocupa el tamaño disponible
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(Color(0xFF001F54))  // Azul oscuro.
         ) {
-            // Se muestra el contenido de la app.
+            // Se muestra el contenido principal de la pantalla del clima.
             WeatherScreenBodyContent(navController, appViewModel)
         }
     }
@@ -56,21 +55,27 @@ fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) 
 
 @Composable
 fun WeatherScreenBodyContent(navController: NavHostController, appViewModel: AppViewModel) {
-    // Se obtiene el estado de la UI.
+    // Variables.
     val appUiState by appViewModel.appUiState.collectAsState()
+    val context = LocalContext.current
 
-    // COMENTARIO.
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Tarjeta para mostrar la información del clima.
+        // Se muestra el clima actual en la ciudad seleccionada.
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = "EL TIEMPO EN ${appUiState.city.uppercase()}", color = Color.White)
         WeatherCard(appViewModel = appViewModel)
 
+        // Se muestra el pronostico para los siguientes tres dias en la ciudad seleccionada.
         Spacer(modifier = Modifier.height(40.dp))
-        Text(text = "Pronóstico 3 dias:", color = Color.White)
+        Text(text = "Pronóstico 3 dias", color = Color.White)
         WeatherCard(appViewModel = appViewModel)
+    }
+
+    // COMENTARIO.
+    if (appUiState.showError) {
+        Toast.makeText(context, appUiState.error, Toast.LENGTH_SHORT).show()
     }
 }

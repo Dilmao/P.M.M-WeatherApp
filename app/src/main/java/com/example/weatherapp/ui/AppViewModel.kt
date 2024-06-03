@@ -15,27 +15,33 @@ class AppViewModel: ViewModel() {
     private val _appUiState = MutableStateFlow(AppUiState())
     val appUiState: StateFlow<AppUiState> = _appUiState
 
+    /** COMENTARIO. **/
     @SuppressLint("DefaultLocale")
     fun updateCity(ciudad: String) {
+        // Se inicia una nueva corrutina en el scope del ViewModel.
         viewModelScope.launch {
             try {
-                // Obtener el servicio y los resultados del clima
+                // Se crea una instancia de Retrofit para realizar la solicitud de red.
                 val service = RetrofitServiceFactory.makeRetrofitService()
                 val weatherResult = service.getWeather(API_KEY, ciudad)
 
-                // Extraer los datos necesarios
+                // Se extrae la información de la solicitud.
                 val country = weatherResult.sys.country
                 val city = weatherResult.name
                 val temperature = weatherResult.main.temp.minus(273.15).let { String.format("%.0f", it) }
+                val minTemperature = weatherResult.main.temp_min.minus(273.15).let { String.format("%.0f", it) }
+                val maxTemperature = weatherResult.main.temp_max.minus(273.15).let { String.format("%.0f", it) }
                 val weather = weatherResult.weather.firstOrNull()?.description?.uppercase() ?: ""
                 val icon = weatherResult.weather.firstOrNull()?.icon ?: ""
 
-                // Actualizar el estado de la UI
+                // Se actualiza el estado de la UI con la nueva información.
                 _appUiState.update { currentState ->
                     currentState.copy(
                         city = city,
                         country = country,
                         temperature = temperature,
+                        minTemperature = minTemperature,
+                        maxTemperature = maxTemperature,
                         weather = weather,
                         iconID = icon,
                         error = "",
@@ -43,10 +49,10 @@ class AppViewModel: ViewModel() {
                     )
                 }
             } catch (e: Exception) {
-                // Manejo de errores
+                // En caso de error, se actualiza el estado de la UI para reflejar el error.
                 _appUiState.update { currentState ->
                     currentState.copy(
-                        error = "No se ha podido encontrar la ciudad introducida ($ciudad).",
+                        error = "No se ha podido encontrar la ciudad introducida: \"$ciudad\".",
                         showError = true
                     )
                 }

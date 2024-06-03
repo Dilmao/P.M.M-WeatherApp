@@ -17,29 +17,28 @@ import com.example.weatherapp.ui.AppUiState
 
 @Composable
 fun Temperature(appUiState: AppUiState) {
-    // COMENTARIO.
     Row (
         modifier = Modifier.fillMaxWidth()
     ) {
-        // COMENTARIO.
+        // Se mMuestra la temperatura actual.
         Text(text = appUiState.temperature, fontSize = 40.sp, fontWeight = FontWeight.Bold)
         Text(text = "ºC", fontSize = 20.sp, modifier = Modifier.padding(top = 5.dp))
 
         Spacer(modifier = Modifier.width(10.dp))
 
-        // COMENTARIO.
+        // Se crea una columna para mostrar las temperaturas mínimas y máximas.
         Column {
             Spacer(modifier = Modifier.height(15.dp))
 
-            // COMENTARIO.
+            // Muestra la temperatura mínima.
             Row {
-                Text(text = "Mín: ${appUiState.temperature}", fontSize = 10.sp)
+                Text(text = "Mín: ${appUiState.minTemperature}", fontSize = 10.sp)
                 Text(text = "ºC", fontSize = 5.sp, modifier = Modifier.padding(top = 2.dp))
             }
 
-            // COMENTARIO.
+            // Muestra la temperatura máxima.
             Row {
-                Text(text = "Máx: ${appUiState.temperature}", fontSize = 10.sp)
+                Text(text = "Máx: ${appUiState.maxTemperature}", fontSize = 10.sp)
                 Text(text = "ºC", fontSize = 5.sp, modifier = Modifier.padding(top = 2.dp))
             }
         }

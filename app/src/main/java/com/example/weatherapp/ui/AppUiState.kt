@@ -1,19 +1,16 @@
 package com.example.weatherapp.ui
 
-import com.example.weatherapp.data.model.RemoteResult
-
 data class AppUiState (
-    // COMENTARIO.
-    var remoteResult: RemoteResult? = null,
-
-    // COMENTARIO.
+    // Variables para almacenar la información de la ciudad y su estado meteorológico.
     var city: String = "Jaca",
     var country: String = "",
     var temperature: String = "",
+    var minTemperature: String = "",
+    var maxTemperature: String = "",
     var weather: String = "",
     var iconID: String = "",
 
-    // COMENTARIO
+    // Variables para manejar errores en la solicitud y mostrar mensajes de error.
     var error: String = "",
     var showError: Boolean = false
 )

@@ -17,12 +17,11 @@ import com.example.weatherapp.ui.AppUiState
 
 @Composable
 fun CityAndCountry(appUiState: AppUiState) {
-    // COMENTARIO.
     Row {
-        // COMENTARIO.
+        // Se muestra el nombre de la ciudad.
         Text(text = appUiState.city)
 
-        // COMENTARIO.
+        // Se muestra el nombre del país en un contenedor estilizado.
         Row(
             modifier = Modifier
                 .align(alignment = Alignment.Top)
