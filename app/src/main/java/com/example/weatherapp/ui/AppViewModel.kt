@@ -16,49 +16,41 @@ class AppViewModel: ViewModel() {
     val appUiState: StateFlow<AppUiState> = _appUiState
 
     @SuppressLint("DefaultLocale")
-    fun updateCity(ciudad: String): Boolean {
-        // TODO la excepción de errores no funciona correctamente (no cambia a true).
-        var noException = true
-
+    fun updateCity(ciudad: String) {
         viewModelScope.launch {
             try {
-                // COMENTARIO.
+                // Obtener el servicio y los resultados del clima
                 val service = RetrofitServiceFactory.makeRetrofitService()
                 val weatherResult = service.getWeather(API_KEY, ciudad)
 
-                // COMENTARIO.
+                // Extraer los datos necesarios
                 val country = weatherResult.sys.country
                 val city = weatherResult.name
                 val temperature = weatherResult.main.temp.minus(273.15).let { String.format("%.0f", it) }
                 val weather = weatherResult.weather.firstOrNull()?.description?.uppercase() ?: ""
                 val icon = weatherResult.weather.firstOrNull()?.icon ?: ""
 
-                // COMENTARIO.
+                // Actualizar el estado de la UI
                 _appUiState.update { currentState ->
                     currentState.copy(
                         city = city,
                         country = country,
                         temperature = temperature,
                         weather = weather,
-                        iconID = icon
+                        iconID = icon,
+                        error = "",
+                        showError = false
                     )
                 }
             } catch (e: Exception) {
-                // No funciona el manejo de errores.
-                noException = false
+                // Manejo de errores
+                _appUiState.update { currentState ->
+                    currentState.copy(
+                        error = "No se ha podido encontrar la ciudad introducida ($ciudad).",
+                        showError = true
+                    )
+                }
             }
         }
-
-        if (noException) {
-            _appUiState.update { currentState ->
-                currentState.copy(error = "")
-            }
-        } else {
-            _appUiState.update { currentState ->
-                currentState.copy(error = "No se ha podido encontrar la ciudad introducida ($ciudad).")
-            }
-        }
-
-        return noException
     }
 }

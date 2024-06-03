@@ -1,13 +1,12 @@
 package com.example.weatherapp.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,21 +19,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.weatherapp.scaffold.MyTitleTopBar
+import com.example.weatherapp.scaffold.MySearchTopBar
 import com.example.weatherapp.screens.componentes.WeatherCard
 import com.example.weatherapp.ui.AppViewModel
 
 // TODO:
-//  1. Mejorar la busqueda de ciudades (WeatherScreen).
 //  2. Mejorar el manejo de errores al no encontrar ciudad (AppViewModel).
-//  3. Lograr que se muestre el icono del clima (WeatherCard).
-//  5. ¿Mejorar el diseño de la app (WeatherScreen)?.
+//  3. Lograr que se muestre el icono del clima (WeatherDescription).
 
 @Composable
 fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) {
-    // TODO cambiar icono de la applicacion
     // Se obtiene el estado de la UI.
     val appUiState by appViewModel.appUiState.collectAsState()
 
@@ -43,7 +39,7 @@ fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) 
 
     // Se configura un Scaffold con una barra superior.
     Scaffold(
-        topBar = { MyTitleTopBar(titulo = "El tiempo en ", appUiState.city) }
+        topBar = { MySearchTopBar(appViewModel) }
     ) { paddingValues ->
         // Se configura un contenedor con fondo azul oscruo.
         Box(
@@ -62,32 +58,19 @@ fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) 
 fun WeatherScreenBodyContent(navController: NavHostController, appViewModel: AppViewModel) {
     // Se obtiene el estado de la UI.
     val appUiState by appViewModel.appUiState.collectAsState()
-    val context = LocalContext.current
-    var city by rememberSaveable { mutableStateOf("") }
 
     // COMENTARIO.
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Campo de texto para cambiar la ciudad.
-        OutlinedTextField(
-            value = city,
-            onValueChange = { city = it },
-            label = { Text(text = "Ciudad", color = Color.White) },
-            textStyle = TextStyle(color = Color.White),
-        )
-
         // Tarjeta para mostrar la información del clima.
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "EL TIEMPO EN ${appUiState.city.uppercase()}", color = Color.White)
         WeatherCard(appViewModel = appViewModel)
 
-        Button(onClick = {
-            if (!appViewModel.updateCity(city)) {
-                Toast.makeText(context, appUiState.error, Toast.LENGTH_SHORT).show()
-            }
-            city = ""
-        }) {
-            Text(text = "Cambiar ciudad")
-        }
+        Spacer(modifier = Modifier.height(40.dp))
+        Text(text = "Pronóstico 3 dias:", color = Color.White)
+        WeatherCard(appViewModel = appViewModel)
     }
 }

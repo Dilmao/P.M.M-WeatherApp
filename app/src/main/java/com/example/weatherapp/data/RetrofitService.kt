@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface RetrofitService {
     //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-    @GET("data/2.5/weather?")
+    @GET("data/2.5/weather?&lang=es")
     suspend fun getWeather(
         @Query("appid") apiKey: String,
         @Query("q") cityName: String

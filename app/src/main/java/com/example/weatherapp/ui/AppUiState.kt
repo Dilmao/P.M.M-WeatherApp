@@ -15,4 +15,5 @@ data class AppUiState (
 
     // COMENTARIO
     var error: String = "",
+    var showError: Boolean = false
 )
