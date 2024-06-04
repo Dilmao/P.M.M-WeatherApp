@@ -7,11 +7,21 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RetrofitService {
+    /** Se consigue la información del clima a traves de la ciudad **/
     //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
     @GET("data/2.5/weather?&lang=es")
-    suspend fun getWeather(
-        @Query("appid") apiKey: String,
-        @Query("q") cityName: String
+    suspend fun getWeatherCity(
+        @Query("q") cityName: String,
+        @Query("appid") apiKey: String
+    ): RemoteResult
+
+    /** Se consigue la información del clima a traves de las coordenadas **/
+    //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+    @GET("data/2.5/weather?&lang=es")
+    suspend fun getWeatherCords(
+        @Query("lat") cityLat: String,
+        @Query("lon") cityLon: String,
+        @Query("appid") apiKey: String
     ): RemoteResult
 }
 

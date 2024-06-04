@@ -2,7 +2,9 @@ package com.example.weatherapp.ui
 
 data class AppUiState (
     // Variables para almacenar la información de la ciudad y su estado meteorológico.
-    var city: String = "Jaca",
+    var lat: String = "",
+    var lon: String = "",
+    var city: String = "",
     var country: String = "",
     var temperature: String = "",
     var minTemperature: String = "",

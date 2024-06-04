@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.weatherapp.scaffold.MySearchTopBar
 import com.example.weatherapp.screens.componentes.WeatherCard
@@ -25,16 +26,12 @@ import com.example.weatherapp.ui.AppViewModel
 
 // TODO:
 //  1. Lograr que se muestre el icono del clima (WeatherDescription).
-//  2. Hacer que la primella llamada a la API use la localización del usuario.
+//  2. Hacer que la primella llamada a la API use la localización del usuario (WeatherScreen).
 //  3. Hacer el pronostico para los proximos dias / o no :v
 
 @Composable
 fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) {
-    // Se recoge el estado actual de la UI desde el ViewModel.
-    val appUiState by appViewModel.appUiState.collectAsState()
-
-    // Se actualiza la API con los valores pasados.
-    appViewModel.updateCity(appUiState.city)
+    appViewModel.GetCords(appViewModel)
 
     // Scaffold.
     Scaffold(
@@ -71,10 +68,11 @@ fun WeatherScreenBodyContent(navController: NavHostController, appViewModel: App
         // Se muestra el pronostico para los siguientes tres dias en la ciudad seleccionada.
         Spacer(modifier = Modifier.height(40.dp))
         Text(text = "Pronóstico 3 dias", color = Color.White)
+        Text(text = "(funcionalidad no implementada)", fontSize = 7.sp, color = Color.White)
         WeatherCard(appViewModel = appViewModel)
     }
 
-    // COMENTARIO.
+    // En caso de error, se mostrara el mensaje pertinente.
     if (appUiState.showError) {
         Toast.makeText(context, appUiState.error, Toast.LENGTH_SHORT).show()
     }
