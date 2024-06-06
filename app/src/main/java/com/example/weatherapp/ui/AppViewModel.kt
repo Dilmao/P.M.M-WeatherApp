@@ -30,13 +30,18 @@ class AppViewModel: ViewModel() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
         var lat = "" // Jaca: 42.5689800.
         var lon = "" // Jaca: -0.5498700.
+        println("lat1: $lat")
+        println("lon1: $lon")
 
         if (
             ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
+
             return
         }
+        println("lat2: $lat")
+        println("lon2: $lon")
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
@@ -44,6 +49,8 @@ class AppViewModel: ViewModel() {
                     try {
                         lat = location.latitude.toString()
                         lon = location.longitude.toString()
+                        println("lat3: $lat")
+                        println("lon3: $lon")
 
                         updateCords(lat, lon)
                     } catch (e: Exception) {

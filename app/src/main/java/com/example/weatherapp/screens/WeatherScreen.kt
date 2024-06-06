@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,6 @@ import com.example.weatherapp.ui.AppViewModel
 // TODO:
 //  1. Lograr que se muestre el icono del clima (WeatherDescription).
 //  2. Hacer que la primella llamada a la API use la localización del usuario (WeatherScreen).
-//  3. Hacer el pronostico para los proximos dias / o no :v
 
 @Composable
 fun WeatherScreen(navController: NavHostController, appViewModel: AppViewModel) {

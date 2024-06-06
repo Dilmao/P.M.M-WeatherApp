@@ -27,6 +27,21 @@ import com.example.weatherapp.ui.AppViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+fun MyStartTopBar(appViewModel: AppViewModel) {
+    // COMENTARIO.
+    CenterAlignedTopAppBar(
+        title = {
+            Text(text = "Weather App")
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color.White,
+            titleContentColor = Color.Black,
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun MySearchTopBar(appViewModel: AppViewModel) {
     // COMENTARIO.
     var city by rememberSaveable { mutableStateOf("") }
@@ -51,7 +66,9 @@ fun MySearchTopBar(appViewModel: AppViewModel) {
                         Icon(imageVector = Icons.Filled.Search, contentDescription = "Buscar ciudad")
                     }
                 },
-                modifier = Modifier.width(250.dp).height(60.dp)
+                modifier = Modifier
+                    .width(250.dp)
+                    .height(60.dp)
             )
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
